@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — Stitched Systems</title>
+  <meta name="description" content="Terms of Service for Stitched Systems. Read our service agreement, client responsibilities, and policies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green:        #06402B;
+      --green-mid:    #0d5c3c;
+      --green-bright: #12784f;
+      --green-light:  rgba(6,64,43,0.14);
+      --grey:         #C0C0C0;
+      --smoke:        #636F65;
+      --smoke-light:  #7a8a7d;
+      --bg:           #000000;
+      --bg-card:      rgba(255,255,255,0.034);
+      --white:        #FFFFFF;
+      --border:       rgba(6,64,43,0.28);
+      --border-mid:   rgba(6,64,43,0.45);
+      --border-subtle:rgba(255,255,255,0.06);
+      --shadow-btn:   0 1px 3px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07);
+      --glow-btn:     0 6px 28px rgba(6,64,43,0.55), 0 1px 3px rgba(0,0,0,0.4);
+      --font-mono:    'JetBrains Mono', monospace;
+      --font-body:    'Montserrat', sans-serif;
+      --ease:         cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: var(--font-body); font-weight: 400; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: var(--font-body); border: none; background: none; color: inherit; }
+    h1,h2,h3,h4 { font-family: var(--font-mono); font-weight: 700; line-height: 1.2; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 13px 0;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid rgba(6,64,43,0.18);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo  { display: flex; align-items: center; gap: 9px; }
+    .logo-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-logo-text { font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 500; color: var(--smoke-light);
+      transition: color 0.18s; position: relative;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(145deg, var(--green-mid) 0%, var(--green) 100%);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow-btn);
+      color: var(--white); border-radius: 40px;
+      padding: 10px 22px; font-weight: 500; font-size: 0.8rem;
+      transition: all 0.22s var(--ease); position: relative; overflow: hidden;
+    }
+    .btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+      border-radius: inherit; pointer-events: none;
+    }
+    .btn:hover { background: linear-gradient(145deg, var(--green-bright) 0%, var(--green-mid) 100%); box-shadow: var(--glow-btn); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--white); border-radius: 2px; }
+    .mob-menu { display: none; position: fixed; inset: 0; z-index: 99; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+    .mob-menu.open { display: flex; }
+    .mob-menu a { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+    .mob-menu a:hover { color: var(--white); }
+    .mob-close { position: absolute; top: 24px; right: 28px; font-size: 1.4rem; color: var(--smoke); cursor: pointer; font-family: var(--font-mono); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 140px 0 72px;
+      border-bottom: 1px solid var(--border-subtle);
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(6,64,43,0.25) 0%, transparent 60%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(6,64,43,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6,64,43,0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 15%, transparent 65%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 15%, transparent 65%);
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--green-mid); border: 1px solid var(--border);
+      border-radius: 4px; padding: 5px 11px; margin-bottom: 22px;
+    }
+    .page-label::before { content: '>'; color: var(--smoke); }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 12px; letter-spacing: -0.03em; }
+    .page-hero .meta { color: var(--smoke); font-size: 0.84rem; font-family: var(--font-mono); }
+
+    /* CONTENT */
+    .legal-wrap { display: grid; grid-template-columns: 220px 1fr; gap: 64px; padding: 80px 0 120px; align-items: start; }
+
+    /* sticky sidebar TOC */
+    .legal-toc { position: sticky; top: 90px; }
+    .legal-toc h4 { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+    .legal-toc ul { display: flex; flex-direction: column; gap: 2px; }
+    .legal-toc li a {
+      display: block; font-size: 0.78rem; color: var(--smoke);
+      padding: 6px 10px; border-radius: 6px; border-left: 2px solid transparent;
+      transition: color 0.18s, background 0.18s, border-color 0.18s;
+      line-height: 1.4;
+    }
+    .legal-toc li a:hover { color: var(--white); background: rgba(6,64,43,0.1); border-left-color: var(--green-mid); }
+
+    /* main content */
+    .legal-content h2 {
+      font-size: 1.05rem; color: var(--white);
+      margin: 52px 0 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 100px;
+    }
+    .legal-content h2:first-child { margin-top: 0; }
+    .legal-content p  { font-size: 0.88rem; color: var(--smoke); margin-bottom: 14px; line-height: 1.88; }
+    .legal-content ul { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .legal-content ul li {
+      font-size: 0.88rem; color: var(--smoke); line-height: 1.78;
+      padding-left: 20px; position: relative;
+    }
+    .legal-content ul li::before { content: '—'; position: absolute; left: 0; color: var(--green-mid); }
+    .legal-content a { color: var(--green-mid); border-bottom: 1px solid rgba(13,92,60,0.35); transition: border-color 0.2s; }
+    .legal-content a:hover { border-color: var(--green-mid); }
+    .legal-content strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    .highlight-box {
+      background: rgba(6,64,43,0.1); border: 1px solid var(--border);
+      border-left: 3px solid var(--green-mid);
+      border-radius: 8px; padding: 20px 24px; margin: 4px 0 24px;
+      font-size: 0.86rem; color: var(--grey); line-height: 1.82;
+    }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border-subtle); padding: 40px 0; }
+    .f-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .f-bottom p { font-size: 0.7rem; color: rgba(255,255,255,0.22); font-family: var(--font-mono); }
+    .f-bottom-links { display: flex; gap: 24px; }
+    .f-bottom-links a { font-size: 0.7rem; color: rgba(255,255,255,0.22); transition: color 0.2s; }
+    .f-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 900px) {
+      .legal-wrap { grid-template-columns: 1fr; gap: 0; }
+      .legal-toc { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav .btn { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 120px 0 56px; }
+      .f-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="logo-icon" viewBox="0 0 34 34" fill="none">
+          <circle cx="5"  cy="7"  r="0.8" fill="#C0C0C0" opacity=".45"/>
+          <circle cx="29" cy="5"  r="1.1" fill="#C0C0C0" opacity=".35"/>
+          <rect x="3"    y="26" width="2.5" height="5.5"  rx=".5" fill="#636F65"/>
+          <rect x="6.5"  y="23" width="3"   height="8.5"  rx=".5" fill="#636F65"/>
+          <rect x="13.5" y="21" width="4"   height="10.5" rx=".5" fill="#C0C0C0"/>
+          <rect x="22"   y="20" width="3.5" height="11.5" rx=".5" fill="#636F65"/>
+          <ellipse cx="17" cy="20" rx="14" ry="5.5" stroke="#06402B" stroke-width="1.8" fill="none" transform="rotate(-12 17 20)"/>
+          <path d="M17 3 C13.5 8 13 14 13 19 L17 17.5 L21 19 C21 14 20.5 8 17 3Z" fill="#06402B"/>
+          <circle cx="17" cy="13" r="1.5" fill="#0d7a50"/>
+          <path d="M13 19 L10.5 24 L17 21.5 L23.5 24 L21 19Z" fill="#636F65" opacity=".9"/>
+          <circle cx="6"  cy="17.5" r="1.8" fill="#06402B"/>
+          <circle cx="28" cy="22.5" r="1.5" fill="#C0C0C0"/>
+        </svg>
+        <span class="nav-logo-text">Stitched Systems</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#process">Process</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn">Book a Call</a>
+      <button class="hamburger" id="hambBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">&#10005;</button>
+  <a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a>
+  <a href="index.html#process"  onclick="document.getElementById('mobMenu').classList.remove('open')">Process</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="container">
+    <div class="page-label">legal</div>
+    <h1>Terms of Service</h1>
+    <p class="meta">Last updated: March 6, 2026</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="legal-wrap">
+
+    <!-- Sidebar TOC -->
+    <nav class="legal-toc">
+      <h4>Contents</h4>
+      <ul>
+        <li><a href="#s1">1. Acceptance of Terms</a></li>
+        <li><a href="#s2">2. Services Description</a></li>
+        <li><a href="#s3">3. Client Responsibilities</a></li>
+        <li><a href="#s4">4. Intellectual Property</a></li>
+        <li><a href="#s5">5. Confidentiality</a></li>
+        <li><a href="#s6">6. Payment Terms</a></li>
+        <li><a href="#s7">7. Limitation of Liability</a></li>
+        <li><a href="#s8">8. Warranties &amp; Disclaimers</a></li>
+        <li><a href="#s9">9. Third-Party Services</a></li>
+        <li><a href="#s10">10. Termination</a></li>
+        <li><a href="#s11">11. Governing Law</a></li>
+        <li><a href="#s12">12. Changes to Terms</a></li>
+        <li><a href="#s13">13. Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main body -->
+    <div class="legal-content">
+
+      <div class="highlight-box">
+        Please read these Terms of Service carefully before using Stitched Systems&rsquo; website or engaging our services. By accessing our website or entering into a service agreement with us, you agree to be bound by these terms.
+      </div>
+
+      <h2 id="s1">1. Acceptance of Terms</h2>
+      <p>By accessing or using the Stitched Systems website at stitchedsystems.com, or by engaging our automation and AI services, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please do not use our website or services.</p>
+
+      <h2 id="s2">2. Services Description</h2>
+      <p>Stitched Systems provides custom AI automation and workflow engineering services, including but not limited to:</p>
+      <ul>
+        <li>AI workflow automation design and implementation</li>
+        <li>Intelligent agent development and deployment</li>
+        <li>System integration and API connectivity</li>
+        <li>Custom tool and script development</li>
+        <li>Data pipeline engineering</li>
+        <li>Process optimization consulting</li>
+      </ul>
+      <p>Specific deliverables, timelines, and pricing for each engagement are outlined in separate project agreements or statements of work.</p>
+
+      <h2 id="s3">3. Client Responsibilities</h2>
+      <p>To enable us to deliver our services effectively, you agree to:</p>
+      <ul>
+        <li>Provide accurate and complete information about your systems, workflows, and requirements</li>
+        <li>Grant necessary access credentials and permissions required for integration work</li>
+        <li>Respond to queries and provide feedback within agreed timelines</li>
+        <li>Ensure you have the legal right to authorize integrations with the platforms and data you provide</li>
+        <li>Maintain the security of any credentials or access tokens shared with us</li>
+      </ul>
+
+      <h2 id="s4">4. Intellectual Property</h2>
+      <p>Upon full payment for services rendered:</p>
+      <ul>
+        <li>Custom code, scripts, and tools developed specifically for your engagement become your property</li>
+        <li>You receive full source code and documentation for all custom deliverables</li>
+        <li>Stitched Systems retains ownership of any proprietary frameworks, methodologies, and reusable components used in delivery</li>
+        <li>You may not resell, redistribute, or sublicense our proprietary frameworks without written consent</li>
+      </ul>
+
+      <h2 id="s5">5. Confidentiality</h2>
+      <p>Both parties agree to maintain the confidentiality of any proprietary information shared during the engagement. Stitched Systems will not disclose your business processes, data, or system architecture to third parties without your written consent, except as required by law or as necessary to deliver the agreed services.</p>
+
+      <h2 id="s6">6. Payment Terms</h2>
+      <p>Payment terms are outlined in individual project agreements. General terms include:</p>
+      <ul>
+        <li>Invoices are due within 14 days of issuance unless otherwise agreed</li>
+        <li>Late payments may incur interest charges as specified in the project agreement</li>
+        <li>Work may be paused on overdue accounts until payment is received</li>
+        <li>Disputes regarding invoices must be raised within 7 days of receipt</li>
+      </ul>
+
+      <h2 id="s7">7. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by applicable law, Stitched Systems shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits, data loss, or business interruption, arising from your use of our services.</p>
+      <p>Our total liability for any claim arising from or related to our services shall not exceed the total fees paid by you in the three months preceding the claim.</p>
+
+      <h2 id="s8">8. Warranties and Disclaimers</h2>
+      <p>We warrant that our services will be performed in a professional and workmanlike manner. However, we do not warrant that:</p>
+      <ul>
+        <li>Automated systems will operate without interruption or error at all times</li>
+        <li>Third-party APIs and platforms we integrate with will remain available or unchanged</li>
+        <li>Results will meet specific performance metrics not expressly agreed upon in writing</li>
+      </ul>
+
+      <h2 id="s9">9. Third-Party Services and OAuth</h2>
+      <p>Our services often involve integration with third-party platforms. You acknowledge that:</p>
+      <ul>
+        <li>Third-party services are subject to their own terms of service and privacy policies</li>
+        <li>We are not responsible for changes, outages, or policy updates made by third-party providers</li>
+        <li>OAuth authorizations granted to Stitched Systems may be revoked by you at any time</li>
+        <li>We access third-party platforms solely to deliver the services you have requested</li>
+      </ul>
+
+      <h2 id="s10">10. Termination</h2>
+      <p>Either party may terminate a service engagement with written notice as specified in the project agreement. Upon termination:</p>
+      <ul>
+        <li>You will be invoiced for work completed up to the termination date</li>
+        <li>We will deliver all completed work and documentation to you</li>
+        <li>Both parties will return or destroy confidential information as requested</li>
+        <li>Provisions regarding intellectual property and confidentiality survive termination</li>
+      </ul>
+
+      <h2 id="s11">11. Governing Law</h2>
+      <p>These Terms of Service are governed by applicable law. Any disputes arising from these terms or our services that cannot be resolved informally will be subject to binding arbitration or the jurisdiction specified in your project agreement.</p>
+
+      <h2 id="s12">12. Changes to Terms</h2>
+      <p>We reserve the right to update these Terms of Service at any time. We will notify existing clients of material changes. Continued use of our services after changes take effect constitutes acceptance of the revised terms.</p>
+
+      <h2 id="s13">13. Contact</h2>
+      <p>For questions regarding these Terms of Service, please contact us:</p>
+      <ul>
+        <li>Email: <a href="mailto:contact@stitchedsystems.com">contact@stitchedsystems.com</a></li>
+        <li>Website: <a href="contact.html">stitchedsystems.com/contact</a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="f-bottom">
+      <p>&copy; 2026 Stitched Systems. All rights reserved.</p>
+      <div class="f-bottom-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hambBtn').addEventListener('click',  () => document.getElementById('mobMenu').classList.add('open'));
+  document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open'));
+</script>
+</body>
+</html>

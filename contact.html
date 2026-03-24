@@ -277,7 +277,7 @@
           <h2 class="form-title">Send a Message</h2>
           <p class="form-sub">Fill in the details below and we'll get back to you within one business day.</p>
 
-          <form id="contactForm" action="mailto:contact@stitchedsystems.com" method="post" enctype="text/plain">
+          <form id="contactForm">
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">First Name</label>
@@ -354,12 +354,31 @@
   document.getElementById('hambBtn').addEventListener('click', () => document.getElementById('mobMenu').classList.add('open'));
   document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open'));
 
-  // Form: show success state after submit (mailto opens native client)
-  document.getElementById('contactForm').addEventListener('submit', function() {
-    setTimeout(() => {
-      document.getElementById('formWrap').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }, 500);
+  // Form: submit via Formspree
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mzdkpgew', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(this)
+      });
+      if (res.ok) {
+        document.getElementById('formWrap').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    } catch {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or email us directly.');
+    }
   });
 </script>
 </body>

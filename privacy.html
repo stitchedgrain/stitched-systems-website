@@ -390,5 +390,254 @@
   document.getElementById('hambBtn').addEventListener('click',  () => document.getElementById('mobMenu').classList.add('open'));
   document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open'));
 </script>
+   
+<!-- ============================================================ -->
+<!-- AI CHATBOT WIDGET — added below all existing code            -->
+<!-- ============================================================ -->
+<style>
+  #ss-launcher {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: #06402B; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(6,64,43,0.5);
+    transition: transform .2s, box-shadow .2s; z-index: 9999;
+  }
+  #ss-launcher:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(6,64,43,0.7); }
+  #ss-launcher.open { background: #0a5a3c; }
+  #ss-window {
+    position: fixed; bottom: 96px; right: 28px;
+    width: 370px; max-width: calc(100vw - 48px); height: 500px;
+    background: #000; border: 1px solid rgba(6,64,43,0.4);
+    border-radius: 16px; display: flex; flex-direction: column;
+    overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    z-index: 9998; opacity: 0; transform: translateY(12px) scale(0.97);
+    pointer-events: none; transition: opacity .25s, transform .25s;
+  }
+  #ss-window.open { opacity: 1; transform: none; pointer-events: all; }
+  .ss-header {
+    padding: 16px 20px; background: #06402B;
+    display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .ss-header-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; animation: blink 2s infinite; }
+  .ss-header h3 { font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: #fff; margin: 0; }
+  .ss-header span { font-size: .7rem; color: rgba(255,255,255,.55); font-family: 'Montserrat', sans-serif; }
+  .ss-msgs {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    scrollbar-width: thin; scrollbar-color: #1a1a1a transparent;
+  }
+  .ss-msgs::-webkit-scrollbar { width: 3px; }
+  .ss-msgs::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 3px; }
+  .ss-msg { max-width: 85%; animation: ssIn .18s ease-out; }
+  @keyframes ssIn { from { opacity:0; transform:translateY(5px) } to { opacity:1; transform:none } }
+  .ss-msg.user { align-self: flex-end; }
+  .ss-msg.bot  { align-self: flex-start; }
+  .ss-bubble {
+    padding: 10px 14px; border-radius: 14px;
+    font-family: 'Montserrat', sans-serif; font-size: .84rem; line-height: 1.55;
+  }
+  .ss-msg.user .ss-bubble { background: #06402B; color: #fff; border-bottom-right-radius: 3px; }
+  .ss-msg.bot  .ss-bubble { background: rgba(255,255,255,.05); border: 1px solid rgba(6,64,43,.35); color: #C0C0C0; border-bottom-left-radius: 3px; }
+  .ss-typing { display: flex; gap: 4px; padding: 12px 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(6,64,43,.35); border-radius: 14px; border-bottom-left-radius: 3px; width: fit-content; }
+  .ss-dot { width: 6px; height: 6px; border-radius: 50%; background: #636F65; animation: ssDot 1.2s infinite; }
+  .ss-dot:nth-child(2){animation-delay:.2s} .ss-dot:nth-child(3){animation-delay:.4s}
+  @keyframes ssDot { 0%,60%,100%{opacity:.3;transform:scale(1)} 30%{opacity:1;transform:scale(1.2)} }
+  .ss-input-row {
+    padding: 12px 14px; border-top: 1px solid rgba(6,64,43,.25);
+    display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0;
+  }
+  .ss-input-row textarea {
+    flex: 1; background: rgba(255,255,255,.04); border: 1px solid rgba(6,64,43,.35);
+    border-radius: 10px; color: #fff; font-family: 'Montserrat', sans-serif;
+    font-size: .84rem; padding: 9px 13px; resize: none; outline: none;
+    max-height: 90px; scrollbar-width: none; line-height: 1.5;
+  }
+  .ss-input-row textarea:focus { border-color: #0a5a3c; }
+  .ss-input-row textarea::placeholder { color: rgba(255,255,255,.2); }
+  #ss-send {
+    width: 38px; height: 38px; border-radius: 50%; background: #06402B;
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: transform .15s, opacity .15s;
+  }
+  #ss-send:hover { transform: scale(1.1); background: #0a5a3c; }
+  #ss-send:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+</style>
+ 
+<!-- Launcher button -->
+<button id="ss-launcher" aria-label="Chat with Stitched Systems">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
+ 
+<!-- Chat window -->
+<div id="ss-window" role="dialog" aria-label="Stitched Systems Chat">
+  <div class="ss-header">
+    <div class="ss-header-dot"></div>
+    <div>
+      <h3>Stitched Systems</h3>
+      <span>Ask us anything — we reply fast</span>
+    </div>
+  </div>
+  <div class="ss-msgs" id="ss-msgs">
+    <div class="ss-msg bot">
+      <div class="ss-bubble">Hey! I'm the Stitched Systems assistant. Ask me about our services, process, or how automation could help your business.</div>
+    </div>
+  </div>
+  <div class="ss-input-row">
+    <textarea id="ss-input" placeholder="Type a message…" rows="1"></textarea>
+    <button id="ss-send" aria-label="Send message">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+ 
+<script>
+(function() {
+  // ── SYSTEM PROMPT: This is how you "train" the bot on your business ──
+  // Edit this text to change what the bot knows and how it behaves.
+  const SYSTEM = `You are a helpful assistant for Stitched Systems, an AI automation agency run by a solo founder based in Denver, CO.
+ 
+ABOUT STITCHED SYSTEMS:
+- We build custom AI automation systems for small businesses and operations teams
+- Specialties: AI Workflow Automation, Intelligent Agents, System Integration, Custom Tool Development, Data Pipeline Engineering, Process Optimization
+- We are remote-first and work with clients globally
+- Typical email response time: within 24 hours
+- Contact email: stitchedgrain@gmail.com
+- Website: stitchedsystems.org
+ 
+SERVICES WE OFFER:
+- AI Workflow Automation: end-to-end automated pipelines that handle repetitive tasks with zero manual intervention
+- Intelligent Agents: custom AI agents that handle email, research, outreach, and operations around the clock
+- System Integration: connect CRM, email, spreadsheets, and SaaS tools into a unified operation
+- Automation Infrastructure: purpose-built systems that coordinate workflows without manual intervention
+- Operational Automation: automate scheduling, messaging, and operational workflows
+- Process Optimization: audit workflows, identify automation opportunities, redesign operations
+ 
+WHO WE WORK WITH:
+- Property management teams (tenant intake, scheduling, maintenance coordination)
+- Service businesses (booking, follow-up, dispatch automation)
+- Operations-heavy companies (workflow coordination, tool integration)
+- Growing teams that want to scale output without adding headcount
+ 
+HOW IT WORKS:
+1. Discover: we map your tools, workflows, and pain points in a deep-dive session
+2. Architect: we design the system tailored to your exact business logic
+3. Deploy: we build, test, document, and hand over full ownership including source code
+ 
+PRICING:
+- All projects are custom-scoped and priced on a per-project basis
+- Pricing is discussed on the discovery call after understanding the project scope
+- Free 15-minute discovery call, no commitment required
+ 
+INSTRUCTIONS:
+- Keep answers concise, friendly, and professional
+- If someone wants to get started, direct them to book a discovery call or email stitchedgrain@gmail.com
+- If asked something you don't know, say: "Great question — that's best answered on a discovery call where we can dig into your specific situation."
+- Never make up pricing numbers or promises`;
+ 
+  // ── YOUR API KEY ──
+  // 1. Go to console.anthropic.com and create an API key
+  // 2. Replace the text below with your actual key (starts with sk-ant-)
+  // 3. Save and re-upload this file to Netlify
+  const API_KEY = 'YOUR_API_KEY_HERE';
+ 
+  let history = [];
+  let busy = false;
+ 
+  const launcher = document.getElementById('ss-launcher');
+  const win      = document.getElementById('ss-window');
+  const msgs     = document.getElementById('ss-msgs');
+  const input    = document.getElementById('ss-input');
+  const sendBtn  = document.getElementById('ss-send');
+ 
+  // Toggle open/close
+  launcher.addEventListener('click', () => {
+    const isOpen = win.classList.toggle('open');
+    launcher.classList.toggle('open', isOpen);
+    if (isOpen) input.focus();
+  });
+ 
+  // Auto-resize textarea
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 90) + 'px';
+  });
+ 
+  // Send on Enter (Shift+Enter = new line)
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  sendBtn.addEventListener('click', send);
+ 
+  function addMsg(role, text) {
+    const el = document.createElement('div');
+    el.className = `ss-msg ${role}`;
+    el.innerHTML = `<div class="ss-bubble">${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>`;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+ 
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'ss-msg bot'; el.id = 'ss-typing';
+    el.innerHTML = '<div class="ss-typing"><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div>';
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function hideTyping() { const el = document.getElementById('ss-typing'); if (el) el.remove(); }
+ 
+  async function send() {
+    const text = input.value.trim();
+    if (!text || busy) return;
+ 
+    if (API_KEY === 'YOUR_API_KEY_HERE') {
+      addMsg('bot', 'The chatbot needs an API key to work. Add your Anthropic API key to the contact.html file where it says YOUR_API_KEY_HERE.');
+      return;
+    }
+ 
+    addMsg('user', text);
+    history.push({ role: 'user', content: text });
+    input.value = ''; input.style.height = 'auto';
+    busy = true; sendBtn.disabled = true; showTyping();
+ 
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 512,
+          system: SYSTEM,
+          messages: history
+        })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      const reply = data.content[0].text;
+      history.push({ role: 'assistant', content: reply });
+      hideTyping();
+      addMsg('bot', reply);
+    } catch(e) {
+      hideTyping();
+      addMsg('bot', 'Something went wrong on my end. Email us at stitchedgrain@gmail.com and we\'ll get back to you shortly.');
+    } finally {
+      busy = false; sendBtn.disabled = false;
+    }
+  }
+})();
+</script>
+<!-- ============================================================ -->
+<!-- END CHATBOT WIDGET                                           -->
+<!-- ============================================================ --> 
+
 </body>
 </html>
